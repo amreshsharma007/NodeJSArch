@@ -3,12 +3,13 @@ import LoggerInstance from './logger';
 import setUpAgendash from './agenda';
 import config from '@/config';
 import Agenda from 'agenda';
+import { Db } from 'mongodb';
 
 function dependencyLoader({
   mongoConnection,
   models,
 }: {
-  mongoConnection: any;
+  mongoConnection: Db;
   models: { name: string; model: any }[];
 }): {
   agenda: Agenda;

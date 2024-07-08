@@ -8,6 +8,8 @@ async function setUpMongoose(): Promise<Db> {
     // useCreateIndex: true,
     // useUnifiedTopology: true,
   });
+
+  // @ts-ignore
   return connection.connection.db;
 }
 
