@@ -115,6 +115,7 @@ function setUpExpress({ server }: { server: Application }): void {
 
       return res.status(apiResponse.getHttpCode()).send(apiResponse.createResponse()).end();
     }
+
     return next(err);
   });
 

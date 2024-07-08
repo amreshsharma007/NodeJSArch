@@ -1,18 +1,18 @@
 import { AxiosError } from 'axios';
 import { Request } from 'express';
-import _ from 'lodash';
+import _, { isArray } from 'lodash';
 
-export default class ApiResponse {
-  private static _instance: ApiResponse;
-  private result: string;
+export default class ApiResponse<T> {
+  private result: T;
   private success: boolean;
   private appCode: number;
   private httpCode: number;
   private message: string;
-  private errors: string[] = [];
+  private errors = {} as { [type: string]: string[] };
   private page: number;
   private itemsCount: number;
   private allItemsCount: number;
+  private static ERR_KEY_DEFAULT = 'default';
 
   public constructor() {
     this.page = -1;
@@ -20,38 +20,32 @@ export default class ApiResponse {
     this.allItemsCount = -1;
   }
 
-  public static getInstance() {
-    return this._instance || (this._instance = new ApiResponse());
-  }
+  public addError(err: string | string[] | Error | AxiosError<ApiResponse<T>>): void {
+    if (!err) this.errors = {};
 
-  public addError<T extends string | Error>(error: T) {
-    if (error) {
-      if (error instanceof Error) {
-        this.errors.push(error.message);
-      } else {
-        this.errors.push(error);
-      }
+    if ((err as AxiosError<ApiResponse<T>>).isAxiosError) {
+      _.map(((err as AxiosError)?.response?.data as ApiResponse<T>)?.errors, _err => this.addError(_err));
+    } else if (err instanceof Error) {
+      this.errors[err.name].push(err.message);
+    } else if (isArray(err)) {
+      this.errors[ApiResponse.ERR_KEY_DEFAULT].push(...err);
     } else {
-      this.errors = [];
+      this.errors[ApiResponse.ERR_KEY_DEFAULT].push(err);
     }
   }
 
-  public setErrors<T extends string | Error = string>(errors: T[]) {
+  public setErrors(errors: string[] | Error[] | AxiosError<ApiResponse<T>>[]): void {
     // Clear the errors var
-    this.errors = [];
+    this.errors = {};
 
     // Now start adding the values
     if (!errors) return;
     for (const err of errors) {
-      if ((err as AxiosError<ApiResponse>).isAxiosError) {
-        _.map(((err as AxiosError)?.response?.data as ApiResponse)?.errors, _err => this.addError<string>(_err));
-      } else {
-        this.addError<T>(err);
-      }
+      this.addError(err);
     }
   }
 
-  public getErrors(): string[] {
+  public getErrors(): { [key: string]: string[] } {
     return this.errors;
   }
 
@@ -82,13 +76,12 @@ export default class ApiResponse {
     return this.message;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public setResult(result: any): this {
+  public setResult(result: T): this {
     this.result = result;
     return this;
   }
 
-  public getResult(): string {
+  public getResult(): T {
     return this.result;
   }
 
@@ -128,18 +121,14 @@ export default class ApiResponse {
     return this.allItemsCount;
   }
 
-  public markSuccess() {
-    this.setResult(true);
+  public markSuccess(): this {
     this.setSuccess(true);
     this.setMessage('Success');
-
     return this;
   }
 
   public updateRequest(req: Request, code: number, message: string, errors: string[]): boolean {
-    if (!req) {
-      return false;
-    }
+    if (!req) return false;
 
     if (code) req.appCode = code;
     if (message) req.message = message;
@@ -178,27 +167,5 @@ export default class ApiResponse {
     data['result'] = this.result;
 
     return data;
-  }
-
-  public formatErrors(err: unknown) {
-    switch (err['type']) {
-      case 'any.empty': {
-        err['message'] = 'Value should not be empty!';
-        break;
-      }
-      case 'string.min': {
-        err['message'] = `Value should have at least ${err['context'].limit} characters!`;
-        break;
-      }
-      case 'string.max': {
-        err['message'] = `Value should have at most ${err['context'].limit} characters!`;
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-
-    return err;
   }
 }

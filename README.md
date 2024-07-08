@@ -59,7 +59,7 @@ It uses nodemon for live reloading :peace-fingers:
 # Roadmap
 - [x] API Validation layer (Celebrate+Joi)
 - [ ] Unit tests examples
-- [ ] [Cluster mode](https://softwareontheroad.com/nodejs-scalability-issues?utm_source=github&utm_medium=readme)
+- [x] [Cluster mode](https://softwareontheroad.com/nodejs-scalability-issues?utm_source=github&utm_medium=readme)
 - [x] The logging _'layer'_
 - [ ] Add agenda dashboard
 - [x] Continuous integration with CircleCI 😍
