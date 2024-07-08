@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { Request } from 'express';
-import _, { isArray } from 'lodash';
+import { isArray } from 'lodash';
 
 export default class ApiResponse<T> {
   private result: T;
@@ -24,7 +24,8 @@ export default class ApiResponse<T> {
     if (!err) this.errors = {};
 
     if ((err as AxiosError<ApiResponse<T>>).isAxiosError) {
-      _.map(((err as AxiosError)?.response?.data as ApiResponse<T>)?.errors, _err => this.addError(_err));
+      this.errors = Object.assign(this.errors, ((err as AxiosError)?.response?.data as ApiResponse<T>)?.errors);
+      // _.map(((err as AxiosError)?.response?.data as ApiResponse<T>)?.errors, _err => this.addError(_err));
     } else if (err instanceof Error) {
       this.errors[err.name].push(err.message);
     } else if (isArray(err)) {
