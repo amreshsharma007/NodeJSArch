@@ -49,9 +49,11 @@ It uses nodemon for live reloading :peace-fingers:
  ```json
  {
   "errors": {
-    "message": "child \"email\" fails because [\"email\" is required]"
+    "default": "Error occurred",
+    "name": "Required field",
+    "email": "child \"email\" fails because [\"email\" is required]"
   }
- }
+}
  ```
 
 [Read more about celebrate here](https://github.com/arb/celebrate) and [the Joi validation API](https://github.com/hapijs/joi/blob/v15.0.1/API.md)
