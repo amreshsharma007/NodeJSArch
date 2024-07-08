@@ -1,0 +1,30 @@
+services:
+  nodejs-arch:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # Folders mapping
+      - /var/log/PP_Portal_Express/${LOGFOLDER}:/app/logs
+      - /app/node_modules
+      - ./public:/app/public
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./uploads:/app/uploads
+
+      # Files mapping
+      - ./.env:/app/.env
+      - ./.eslintignore:/app/.eslintignore
+      - ./.eslintrc.js:/app/.eslintrc.js
+      - ./.mocharc.js:/app/.mocharc.js
+      - ./.prettierrc.js:/app/.prettierrc.js
+      - ./migrate.json:/app/migrate.json
+      - ./nodemon.json:/app/nodemon.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./package.json:/app/package.json
+      - ./Procfile:/app/Procfile
+      - ./README.md:/app/README.md
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tsconfig.testing.json:/app/tsconfig.testing.json
+    network_mode: host
