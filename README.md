@@ -1,24 +1,18 @@
-# Bulletproof Node.js architecture 🛡️
-
-This is the example repository from the blog post ['Bulletproof node.js project architecture'](https://softwareontheroad.com/ideal-nodejs-project-structure?utm_source=github&utm_medium=readme)
-
-Please read the blog post in order to have a good understanding of the server architecture.
-
-Also, I added lots of comments to the code that are not in the blog post, because they explain the implementation and the reason behind the choices of libraries and some personal opinions and some bad jokes.
+# NodeJSArch - A Best Node.js architecture 🛡️
 
 The API by itself doesn't do anything fancy, it's just a user CRUD with authentication capabilities.
 Maybe we can transform this into something useful, a more advanced example, just open an issue and let's discuss the future of the repo.
 
 ## Development
 
-We use `node` version `14.9.0`
+We use `node` version `20.15.0`
 
 ```
-nvm install 14.9.0
+nvm install 20.15.0
 ```
 
 ```
-nvm use 14.9.0
+nvm use 20.15.0
 ```
 
 The first time, you will need to run
@@ -32,22 +26,11 @@ Then just start the server with
 ```
 npm run start
 ```
-It uses nodemon for livereloading :peace-fingers:
-
-## Online one-click setup
-
-You can use Gitpod for the one click online setup. With a single click it will launch a workspace and automatically:
-
-- clone the `bulletproof-nodejs` repo.
-- install the dependencies.
-- run `cp .env.example .env`.
-- run `npm run start`.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
+It uses nodemon for live reloading :peace-fingers:
 
 # API Validation
 
- By using [celebrate](https://github.com/arb/celebrate), the req.body schema becomes cleary defined at route level, so even frontend devs can read what an API endpoint expects without needing to write documentation that can get outdated quickly.
+ By using [celebrate](https://github.com/arb/celebrate), the req.body schema becomes clearly defined at route level, so even frontend devs can read what an API endpoint expects without needing to write documentation that can get outdated quickly.
 
  ```js
  route.post('/signup',
@@ -94,13 +77,13 @@ To simplify documenting your API, we have included [Optic](https://useoptic.com)
 
   [It's not a good idea to have node.js serving static assets a.k.a the frontend](https://softwareontheroad.com/nodejs-scalability-issues?utm_source=github&utm_medium=readme)
 
-  Also, I don't wanna take part in frontend frameworks wars 😅
+  Also, I don't want to take part in frontend frameworks wars 😅
 
   Just use the frontend framework you like the most _or hate the least_. It will work 😁
 
  ## Don't you think you can add X layer to do Y? Why do you still use express if the Serverless Framework is better and it's more reliable?
 
-  I know this is not a perfect architecture but it's the most scalable that I know with less code and headache that I know.
+  I know this is not a perfect architecture, but it's the most scalable that I know with less code and headache that I know.
 
   It's meant for small startups or one-developer army projects.
 
