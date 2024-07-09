@@ -7,13 +7,14 @@ import { randomBytes } from 'node:crypto';
 import { IUser, IUserInputDTO } from '@/interfaces/IUser';
 import { EventDispatcher, EventDispatcherInterface } from '@/decorators/eventDispatcher';
 import events from '@/subscribers/events';
+import winston from 'winston';
 
 @Service()
 export default class AuthService {
   constructor(
     @Inject('userModel') private userModel: Models.UserModel,
     private mailer: MailerService,
-    @Inject('logger') private logger,
+    @Inject('logger') private logger: winston.Logger,
     @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
   ) {}
 
