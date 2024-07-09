@@ -41,7 +41,7 @@ It uses nodemon for live reloading :peace-fingers:
       password: Joi.string().required(),
     }),
   }),
-  controller.signup)
+  controller.signup);
  ```
 
  **Example error**
@@ -49,9 +49,15 @@ It uses nodemon for live reloading :peace-fingers:
  ```json
  {
   "errors": {
-    "default": "Error occurred",
-    "name": "Required field",
-    "email": "child \"email\" fails because [\"email\" is required]"
+    "default": [
+      "Error occurred"
+    ],
+    "name": [
+      "Required field"
+    ],
+    "email": [
+      "child \"email\" fails because [\"email\" is required]"
+    ]
   }
 }
  ```
