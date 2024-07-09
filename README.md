@@ -1,4 +1,4 @@
-# NodeJSArch - A Best Node.js architecture 🛡️
+# NodeJSArch - Node.js architecture 🛡️
 
 The API by itself doesn't do anything fancy, it's just a user CRUD with authentication capabilities.
 Maybe we can transform this into something useful, a more advanced example, just open an issue and let's discuss the

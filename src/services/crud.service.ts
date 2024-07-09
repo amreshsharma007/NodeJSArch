@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Logger } from 'winston';
 import { Container, Inject } from 'typedi';
 import { ClientSession, Document, FilterQuery, Model, Mongoose, SaveOptions } from 'mongoose';
+// import { ObjectId } from 'bson';
 import { MongooseOptionInterface } from '@/interfaces/mongoose-option.interface';
 
 /**
@@ -51,7 +52,7 @@ export default abstract class CrudService<T, U> {
    * @param ret
    * @param options
    */
-  public static modifyMongooseDoc = (doc: Document, ret: Record<string, unknown>, options: object) => {
+  public static modifyMongooseDoc = (doc: Document, ret: Record<string, unknown>, options: Record<string, unknown>) => {
     ret.id = ret._id;
     delete ret._id;
     delete ret.__v;
@@ -67,7 +68,7 @@ export default abstract class CrudService<T, U> {
     return tempProjections;
   };
 
-  public prepareCrudListAsObject<T>(list: Document[]) {
+  public prepareCrudListAsObject<T>(list: Document[]): T[] {
     const result = [] as T[];
 
     try {
@@ -104,7 +105,7 @@ export default abstract class CrudService<T, U> {
    * @param dateField
    * @param returnTime
    */
-  public dateStringProject(dateField: string, returnTime: boolean = true) {
+  public dateStringProject(dateField: string, returnTime = true) {
     if (!returnTime) {
       return {
         $concat: [
@@ -136,7 +137,7 @@ export default abstract class CrudService<T, U> {
     };
   }
 
-  public async findRandomEntry<T>(filters: object = {}): Promise<T> {
+  public async findRandomEntry<T>(filters: Record<string, unknown> = {}): Promise<T> {
     // Null check for the default Model
     if (!this._defaultModel) return;
 
@@ -268,7 +269,12 @@ export default abstract class CrudService<T, U> {
     ...args: Record<string, unknown>[]
   );
 
-  abstract create(req: Request, inputs: object, saveOptions: SaveOptions, ...args: Record<string, unknown>[]);
+  abstract create(
+    req: Request,
+    inputs: Record<string, unknown>,
+    saveOptions: SaveOptions,
+    ...args: Record<string, unknown>[]
+  );
 
   abstract createMultiple(
     req: Request,
@@ -343,7 +349,7 @@ export default abstract class CrudService<T, U> {
     return (
       Object.keys(inputObj)
         .filter(key => keys.includes(key))
-        // eslint-disable-next-line unicorn/no-array-reduce,unicorn/prefer-object-from-entries
+        // eslint-disable-next-line unicorn/no-array-reduce
         .reduce((obj, key) => {
           obj[key] = inputObj[key];
           return obj;
@@ -351,7 +357,7 @@ export default abstract class CrudService<T, U> {
     );
   };
 
-  protected prepareDateFilterAggregation(dateFrom: Date, dateTo: Date) {
+  protected prepareDateFilterAggregation(dateFrom: Date, dateTo: Date): Record<string, unknown> {
     const result = {};
 
     if (dateFrom != null) {
@@ -418,14 +424,18 @@ export default abstract class CrudService<T, U> {
     }
   }
 
-  protected async commitSessionTransaction(session: ClientSession, saveOptions: SaveOptions = {}) {
+  protected async commitSessionTransaction(session: ClientSession, saveOptions: SaveOptions = {}): Promise<void> {
     if (!saveOptions || !saveOptions.session) {
       this.logger.info('Committing Transaction...');
       return session.commitTransaction();
     }
   }
 
-  protected async abortSessionTransaction(session: ClientSession, saveOptions: SaveOptions = {}, error: Error = null) {
+  protected async abortSessionTransaction(
+    session: ClientSession,
+    saveOptions: SaveOptions = {},
+    error: Error = null,
+  ): Promise<void> {
     if (!saveOptions || !saveOptions.session) {
       try {
         /**
@@ -456,7 +466,7 @@ export default abstract class CrudService<T, U> {
    * @param session
    * @protected
    */
-  protected assertSessionInTransaction(session: ClientSession) {
+  protected assertSessionInTransaction(session: ClientSession): void {
     if (!session.inTransaction()) throw new Error('No Active transaction found in session');
   }
 
