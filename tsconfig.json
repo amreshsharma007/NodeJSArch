@@ -36,8 +36,6 @@
     ],
     "types": [
       "node",
-      "mocha",
-      "chai",
       "express"
     ]
   },
