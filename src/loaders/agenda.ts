@@ -1,6 +1,5 @@
 import Agenda from 'agenda';
 import config from '@/config';
-import { Db } from 'mongodb';
 
 function setUpAgendash(): Agenda {
   return new Agenda({

@@ -3,6 +3,7 @@ import { Request } from 'express';
 import { isArray } from 'lodash';
 
 export default class ApiResponse<T> {
+  private static ERR_KEY_DEFAULT = 'default';
   private result: T;
   private success: boolean;
   private appCode: number;
@@ -12,7 +13,6 @@ export default class ApiResponse<T> {
   private page: number;
   private itemsCount: number;
   private allItemsCount: number;
-  private static ERR_KEY_DEFAULT = 'default';
 
   public constructor() {
     this.page = -1;
