@@ -4,7 +4,7 @@ import agendash from 'agendash';
 import { Container } from 'typedi';
 import config from '@/config';
 
-function setUpAgendaRoute(app: Router, opts): void {
+function setUpAgendaRoute(app: Router): void {
   const agendaInstance = Container.get('agenda');
 
   app.use(
