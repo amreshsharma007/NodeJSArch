@@ -1,7 +1,6 @@
 import setUpExpress from './setUpExpress';
 import jobsLoader from './jobs';
 import Logger from './logger';
-//We have to import at least all the events once, so they can be triggered
 import './events';
 import setUpMongoose from './mongoose';
 import { Db } from 'mongodb';
@@ -15,7 +14,7 @@ async function setUpServer(
   server: Application,
   loadJobs: boolean,
   mailTransportType: 'default' | 'stub' = 'default',
-) {
+): Promise<void> {
   const mongoConnection: Db = await setUpMongoose();
   Logger.info('DB loaded and connected!');
 
@@ -27,7 +26,7 @@ async function setUpServer(
   Logger.info('Dependency Injector loaded');
 
   if (loadJobs) {
-    jobsLoader({ agenda });
+    await jobsLoader({ agenda });
     Logger.info('Jobs loaded');
   }
 

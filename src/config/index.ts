@@ -1,10 +1,13 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import process from 'node:process';
 
 // Set the NODE_ENV to 'development' by default
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
-const envFound = dotenv.config();
+const envFound = dotenv.config({
+  path: ['.env.' + process.env.NODE_ENV, '.env'],
+});
 if (envFound.error) {
   // This error should crash whole process
 
@@ -40,7 +43,7 @@ export default {
    */
   agenda: {
     dbCollection: process.env.AGENDA_DB_COLLECTION,
-    pooltime: process.env.AGENDA_POOL_TIME,
+    poolTime: process.env.AGENDA_POOL_TIME,
     concurrency: Number.parseInt(process.env.AGENDA_CONCURRENCY, 10),
   },
 

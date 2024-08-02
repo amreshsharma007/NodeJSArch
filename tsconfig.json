@@ -27,6 +27,7 @@
     ],
     "pretty": true,
     "rootDir": ".",
+    "skipLibCheck": true,
     "sourceMap": true,
     "target": "es2017",
     // must define

@@ -2,11 +2,11 @@ import Agenda from 'agenda';
 import config from '@/config';
 import { Db } from 'mongodb';
 
-function setUpAgendash({ mongoConnection }: { mongoConnection: Db }): Agenda {
+function setUpAgendash(): Agenda {
   return new Agenda({
-    mongo: mongoConnection,
-    db: { address: '', collection: config.agenda.dbCollection },
-    processEvery: config.agenda.pooltime,
+    // mongo: mongoConnection,
+    db: { address: config.databaseURL },
+    processEvery: config.agenda.poolTime,
     maxConcurrency: config.agenda.concurrency,
   });
   /**
