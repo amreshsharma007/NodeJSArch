@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 function setUpModels(): {
   name: string;
-  model: mongoose.Model<mongoose.Document<unknown, unknown, unknown>, Record<string, never>, Record<string, never>>;
+  model: mongoose.Model<never>;
 }[] {
   /**
    * WTF is going on here?

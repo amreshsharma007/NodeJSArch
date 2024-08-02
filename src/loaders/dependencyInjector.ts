@@ -4,13 +4,14 @@ import setUpAgendash from './agenda';
 import config from '@/config';
 import Agenda from 'agenda';
 import { Db } from 'mongodb';
+import mongoose from 'mongoose';
 
 function dependencyLoader({
   mongoConnection,
   models,
 }: {
   mongoConnection: Db;
-  models: { name: string; model: any }[];
+  models: { name: string; model: mongoose.Model<never> }[];
 }): {
   agenda: Agenda;
 } {
@@ -19,7 +20,7 @@ function dependencyLoader({
       Container.set(m.name, m.model);
     }
 
-    const agendaInstance = setUpAgendash({ mongoConnection });
+    const agendaInstance = setUpAgendash();
     // const mgInstance = new Mailgun(formData);
 
     Container.set('agendaInstance', agendaInstance);
