@@ -6,14 +6,14 @@ future of the repo.
 
 ## Development
 
-We use `node` version `20.15.0`
+We use `node` version `20`
 
 ```
-nvm install 20.15.0
+nvm install 20
 ```
 
 ```
-nvm use 20.15.0
+nvm use 20
 ```
 
 The first time, you will need to run
@@ -60,7 +60,7 @@ quickly.
       "Required field"
     ],
     "email": [
-      "child \"email\" fails because [\"email\" is required]"
+      "Invalid Email"
     ]
   }
 }
