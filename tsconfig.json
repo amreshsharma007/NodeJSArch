@@ -7,18 +7,13 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "es2017",
-      "esnext.asynciterable"
-    ],
+    "lib": ["es2017", "esnext.asynciterable"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": false,
     "outDir": "./build",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "plugins": [
       {
@@ -31,20 +26,9 @@
     "sourceMap": true,
     "target": "es2017",
     // must define
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/types"
-    ],
-    "types": [
-      "node",
-      "express"
-    ]
+    "typeRoots": ["./node_modules/@types", "./src/types", "./node_modules/@ncome"],
+    "types": ["node", "express"]
   },
-  "exclude": [
-    "node_modules",
-    "tests"
-  ],
-  "include": [
-    "./src/**/*"
-  ]
+  "exclude": ["node_modules", "tests"],
+  "include": ["./src/**/*"]
 }

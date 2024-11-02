@@ -1,5 +1,4 @@
 'use strict';
-import LoggerInstance from '@/loaders/logger';
 
 const deploy = async () => {
 

@@ -1,30 +1,22 @@
 services:
-  nodejs-arch:
+  v1-report:
     restart: always
+    image: ${AWS_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:latest
+    container_name: v1-report
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - VERSION=${VERSION}
+        - NODE_ENV=${ENV}
+        - MONGODB_URI=${MONGODB_URI}
+        - JWT_SECRET=${JWT_SECRET}
+        - ENC_KEY=${ENC_KEY}
+        - AWS_REGION=${AWS_REGION}
+        - AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     volumes:
-      # Folders mapping
-      - /var/log/PP_Portal_Express/${LOGFOLDER}:/app/logs
-      - /app/node_modules
-      - ./public:/app/public
-      - ./src:/app/src
-      - ./tests:/app/tests
-      - ./uploads:/app/uploads
-
-      # Files mapping
-      - ./.env:/app/.env
-      - ./.eslintignore:/app/.eslintignore
-      - ./.eslintrc.js:/app/.eslintrc.js
-      - ./.mocharc.js:/app/.mocharc.js
-      - ./.prettierrc.js:/app/.prettierrc.js
-      - ./migrate.json:/app/migrate.json
-      - ./nodemon.json:/app/nodemon.json
-      - ./package-lock.json:/app/package-lock.json
-      - ./package.json:/app/package.json
-      - ./Procfile:/app/Procfile
-      - ./README.md:/app/README.md
-      - ./tsconfig.json:/app/tsconfig.json
-      - ./tsconfig.testing.json:/app/tsconfig.testing.json
+      - /var/log/V1_Report:/app/logs
+      - ${HOME}/.aws:/root/.aws
     network_mode: host
