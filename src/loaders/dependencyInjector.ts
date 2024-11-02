@@ -29,11 +29,9 @@ function dependencyLoader({
     }
 
     const agendaInstance = setUpAgendash();
-    // const mgInstance = new Mailgun(formData);
 
-    Container.set('agendaInstance', agendaInstance);
+    Container.set('agenda', agendaInstance);
     Container.set('logger', LoggerInstance);
-    // Container.set('emailClient', mgInstance.client({ key: config.emails.apiKey, username: config.emails.apiUsername }));
     Container.set('emailDomain', config.emails.domain);
 
     LoggerInstance.info('Agenda injected into container');

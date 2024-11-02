@@ -1,13 +1,7 @@
 'use strict';
 import LoggerInstance from '@/loaders/logger';
-import { Docker } from 'node-docker-api';
 
 const deploy = async () => {
-  const docker = new Docker({ socketPath: '/var/run/docker.sock' });
-
-  const list = await docker.container.list();
-
-  LoggerInstance.info(list);
 
   // docker.container
   //   .create({
