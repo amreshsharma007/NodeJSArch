@@ -26,7 +26,7 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "typedi": "^0.10.0",
-    "winston": "^3.15.0"
+    "winston": "^3.16.0"
   },
   "description": "Node.js Arch",
   "devDependencies": {
@@ -78,7 +78,7 @@
     "heroku-postbuild": "npm run build",
     "deploy": "ts-node -r tsconfig-paths/register --transpile-only src/commmands/sampleCommand.ts",
     "start": "nodemon",
-    "start:native": "node build/src/app.js",
+    "start:native": "node --no-deprecation build/src/app.js",
     "inspect": "nodemon --inspect src/app.ts",
     "test": "jest",
     "lint": "npm run lint:js ",
