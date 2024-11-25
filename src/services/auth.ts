@@ -117,7 +117,7 @@ export default class AuthService {
     this.logger.silly(`Sign JWT for userId: ${user._id}`);
     return jwt.sign(
       {
-        _id: user._id, // We are gonna use this in the middleware 'isAuth'
+        _id: user._id, // We are going to use this in the middleware 'isAuth'
         role: user.role,
         name: user.name,
         exp: exp.getTime() / 1000,
